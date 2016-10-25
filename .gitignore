@@ -1,0 +1,80 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+public class FirstTest {
+
+    private WebDriver driver;
+
+    @BeforeClass
+    public void setUp() {
+        System.setProperty("webdriver.gecko.driver","D:\\Selenium\\geckodriver.exe");
+        driver = new FirefoxDriver();
+    }
+
+    @Test
+    public void gotoEdaUaPage() throws InterruptedException {
+
+        driver.get("https://eda.ua/");
+
+        //driver.findElement(By.xpath("html/body/header/div[1]/div/div/div[2]/div/div/div/a[2]")).click();
+        driver.findElement(By.xpath("//a[@class='user-panel-auth__link'][@title='Вход']")).click();
+        //driver.findElement(By.xpath("//div[text()='Регистрация']//following::input[@data-name='email']")).sendKeys("viktorbibik@ukr.net");
+        driver.findElement(By.xpath("//form[@class='form-horizontal log-form active']//input[@id='user_models_User_email']")).sendKeys("viktorbibik@ukr.net");
+        //driver.findElement(By.xpath("//input[@class='btn btn-primary btn-lg' and @name='yt3']//preceding::input[1]")).sendKeys("deadmananor_1");
+        driver.findElement(By.xpath("//form[@class='form-horizontal log-form active']//input[@id='user_models_User_password']")).sendKeys("deadmananor_1");
+        //driver.findElement(By.xpath("//input[@class='btn btn-primary btn-lg' and @name='yt3']")).click();
+        driver.findElement(By.xpath("//form[@class='form-horizontal log-form active']//input[@class='btn btn-primary btn-lg']")).click();
+        //driver.findElement(By.xpath("//div[@id='login' and @class='login-form-popup modal fade in']/div[@class='modal-dialog']/button[@class='close']")).click(); //закрыть окно
+        //driver.findElement(By.xpath("//span[@class='tile__image' and @style='background-image: url(/images/99510-170-340-category_item_big_1_2.png);']")).click();
+
+        // Найти товар в поиске, выбрать, заказать, добавить в корзину, нажать на корзину.
+        Thread.sleep(6000);
+        driver.get("https://eda.ua/");
+
+        driver.findElement(By.xpath("//div[text()='Заказывайте доставку еды онлайн']//preceding::input[3]")).sendKeys("Пицца Бергамо");
+        driver.findElement(By.xpath("//div[text()='Заказывайте доставку еды онлайн']//preceding::input[3]")).sendKeys(Keys.RETURN);
+
+        Thread.sleep(10000);
+        driver.findElement(By.xpath("//div[@class='tab-pane active']//span[@class='btn btn-primary btn-sm pull-right']")).click();
+        Thread.sleep(10000);
+        driver.findElement(By.xpath("//div[@class='modal-content']//button[@class='btn btn-primary btn-xs-block cart-control test']")).click();
+        Thread.sleep(10000);
+        driver.findElement(By.xpath("//div[@class='col-sm-8 col-md-5']//span[@class='header__basket-icon ic-basket']")).click();
+
+        // Увеличить количество товара в корзине
+        Thread.sleep(10000);
+        driver.findElement(By.xpath("//div[@class='modal-dialog']//input[@class='form-control cart-control-el counter__value']")).sendKeys("5");
+        driver.findElement(By.xpath("//div[@class='modal-dialog']//input[@class='form-control cart-control-el counter__value']")).sendKeys(Keys.RETURN);
+
+        Thread.sleep(10000);
+        driver.findElement(By.xpath("//div[@class='modal-body cart-modal']//a[@class='btn btn-primary issue-order']")).click();
+
+
+        // Ввод адресса доставки
+        Thread.sleep(10000);
+        driver.get("https://eda.ua/");
+        driver.findElement(By.xpath("//a[@class='location__get-location2']")).click(); // Нажать на значек определения адресса
+        Thread.sleep(10000);
+        driver.findElement(By.xpath("//span[@class='twitter-typeahead']//input[@id='address']")).sendKeys("sdvвамваи3424");
+        driver.findElement(By.xpath("//div[@class='tab-pane active']//button[@class='btn btn-lg btn-block btn-primary']")).click();
+
+        // Нажать опять на корзину и перейти к финальной стадии оформления заказа (не уверен что тработает, ещё не проверял)
+        Thread.sleep(10000);
+        driver.findElement(By.xpath("//div[@class='col-sm-8 col-md-5']//span[@class='header__basket-icon ic-basket']")).click();
+        Thread.sleep(10000);
+        driver.findElement(By.xpath("//div[@class='modal-body cart-modal']//a[@class='btn btn-primary issue-order']")).click();
+
+    }
+
+    /*@AfterClass
+    public void tearDown() {
+
+        driver.close();
+
+    }*/
+
+}
